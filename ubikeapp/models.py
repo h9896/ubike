@@ -9,7 +9,7 @@ class Ubike(models.Model):
     snaen = models.TextField()
     bemp = models.IntegerField()
     act = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "ubike"
