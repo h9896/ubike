@@ -42,4 +42,5 @@ def load_data(url, youbike_api):
 if __name__ == "__main__":
     while True:
         load_data(url, youbike_api)
+        print('OK!')
         time.sleep(10)
