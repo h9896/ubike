@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  ubike_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ubike_app
+    container_name: ubike_app
+    hostname: ubike_app
+    restart: always
+    command: bash -c "sleep 30s
+                      && python /app/manage.py makemigrations
+                      && python /app/manage.py migrate
+                      && python /app/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/ubike_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ubikedatabase  
+
+  ubikedatabase:
+    image: mysql
+    container_name: ubikedatabase
+    hostname: ubikedatabase
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password --mysqlx=0
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db:/var/lib/ubikedatabase
+    environment:
+      - TZ=Asia/Taipei
+      - MYSQL_HOST=localhost 
+      - MYSQL_PORT=3306 
+      - MYSQL_DATABASE=ubikedatabase
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=123456
